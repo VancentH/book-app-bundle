@@ -1,0 +1,22 @@
+version: '3.5'
+
+services:
+  springboot-container:
+    container_name: springboot-container
+    build:
+      context: book-app-backend # 指定前端資料夾目錄(包含Dockerfile的根目錄)
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    restart: always
+  nginx-container:
+    container_name: nginx-container
+    build:
+      context: book-app # 指定前端資料夾目錄(包含Dockerfile的根目錄)
+      dockerfile: Dockerfile
+    ports:
+      - 80:80 # 在 default.conf 指定了 nginx 對外 port
+    command: ["nginx", "-g", "daemon off;"]
+    restart: always
+    depends_on:
+      - springboot-container # 等待後端服務啟動後、再行啟動該服務

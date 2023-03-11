@@ -1,0 +1,32 @@
+<main>
+  <div class="h-screen w-full bg-gray-200 py-6 sm:px-6 lg:px-8">
+    <div class="relative flex items-center justify-center overflow-x-auto">
+      <table class="text-md w-auto text-left text-gray-500">
+        <thead class="bg-gray-100 text-base uppercase text-gray-700">
+          <tr>
+            <th scope="col" class="px-6 py-3">Book</th>
+            <th scope="col" class="px-6 py-3">Author</th>
+            <th scope="col" class="px-6 py-3 text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            class="border-b bg-white"
+            *ngFor="let book of books; index as i; trackBy: trackByFn"
+          >
+            <td class="whitespace-normal px-6 py-4">{{ book.bookname }}</td>
+            <td class="px-6 py-4">{{ book.author }}</td>
+            <td class="px-6 py-4">
+              <button
+                type="button"
+                class="rounded-sm bg-red-400 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-100"
+              >
+                Remove
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
