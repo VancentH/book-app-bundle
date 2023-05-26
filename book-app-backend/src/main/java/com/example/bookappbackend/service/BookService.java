@@ -15,7 +15,7 @@ public class BookService {
 	@Autowired
 	private BookRepository bookRepository;
 
-	// 新增與修改書籍
+	// 新增書籍
 	public Book createBook(Book book) {
 		return bookRepository.save(book);
 	}
@@ -36,5 +36,11 @@ public class BookService {
 		bookRepository.findAll().forEach(books::add);
 		return books;
 	}
+	
+	// 修改書籍
+	public int updateByJPQL(String bookname, String author, long id) {
+		return bookRepository.updateByJPQL(bookname, author, id);
+	}
+
 
 }

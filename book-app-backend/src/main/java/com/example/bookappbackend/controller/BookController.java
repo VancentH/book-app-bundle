@@ -16,7 +16,7 @@ import com.example.bookappbackend.domain.Book;
 import com.example.bookappbackend.service.BookService;
 
 @RestController
-@RequestMapping("api")
+@RequestMapping("v1")
 public class BookController {
 
 	@Autowired
@@ -54,21 +54,22 @@ public class BookController {
 	}
 
 	/**
-	 * 更新一筆書籍
-	 * 
-	 * @param id
+	 * 透過id更新一筆書籍
+	 *
 	 * @param bookname
 	 * @param author
+	 * @param id
 	 * @return
 	 */
 	@PutMapping("/books")
-	public Book update(@RequestParam long id, @RequestParam String bookname, @RequestParam String author) {
-		Book book = new Book();
-		book.setId(id);
-		book.setBookname(bookname);
-		book.setAuthor(author);
+	public int update(@RequestParam String bookname, @RequestParam String author, @RequestParam long id) {
+		// Book book = new Book();
+		// book.setId(id);
+		// book.setBookname(bookname);
+		// book.setAuthor(author);
 		// update and create both using repository.save()
-		return bookService.createBook(book);
+		// return bookService.createBook(book);
+		return bookService.updateByJPQL(bookname, author, id);
 	}
 
 	/**
