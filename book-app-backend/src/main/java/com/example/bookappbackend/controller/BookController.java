@@ -16,7 +16,7 @@ import com.example.bookappbackend.domain.Book;
 import com.example.bookappbackend.service.BookService;
 
 @RestController
-@RequestMapping("v1")
+//@RequestMapping("v1")
 public class BookController {
 
 	@Autowired
