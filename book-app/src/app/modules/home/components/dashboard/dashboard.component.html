@@ -1,0 +1,92 @@
+<table class="text-md w-auto text-left text-gray-700">
+  <thead class="bg-gray-100 text-base uppercase text-gray-700">
+    <tr>
+      <th scope="col" class="px-6 py-3">Book</th>
+      <th scope="col" class="px-6 py-3">Author</th>
+      <th scope="col" class="px-6 py-3 text-center">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      class="border-b bg-white"
+      *ngFor="let book of books; index as i; trackBy: trackByFn"
+    >
+      <td class="whitespace-normal px-6 py-4">
+        <div
+          *ngIf="enableUpdate && book.id === updateId; else readonlyBookname"
+        >
+          <input
+            [(ngModel)]="updatedBook.bookname"
+            id="bookname"
+            name="bookname"
+            type="text"
+            autocomplete="bookname"
+            class="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-amber-600 focus-visible:outline-none sm:text-sm sm:leading-6"
+          />
+        </div>
+        <ng-template #readonlyBookname>{{ book.bookname }}</ng-template>
+      </td>
+      <td class="px-6 py-4">
+        <div *ngIf="enableUpdate && book.id === updateId; else readonlyAuthor">
+          <input
+            [(ngModel)]="updatedBook.author"
+            id="author"
+            name="author"
+            type="text"
+            autocomplete="author"
+            class="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-amber-600 focus-visible:outline-none sm:text-sm sm:leading-6"
+          />
+        </div>
+        <ng-template #readonlyAuthor>{{ book.author }}</ng-template>
+      </td>
+      <td class="px-6 py-4">
+        <div class="flex flex-col items-center gap-1.5 sm:flex-row">
+          <ng-container
+            *ngIf="enableUpdate && book.id === updateId; else updateTemplate"
+          >
+            <!-- after clicking update button -->
+            <div class="flex-initial">
+              <button
+                (click)="cancelUpdate()"
+                type="button"
+                class="rounded-sm bg-gray-400 px-5 py-2.5 text-sm font-semibold text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-100"
+              >
+                Cancel
+              </button>
+            </div>
+            <div class="flex-initial">
+              <button
+                (click)="confirmUpdate(updatedBook)"
+                type="button"
+                class="rounded-sm bg-blue-400 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100"
+              >
+                Confirm
+              </button>
+            </div>
+          </ng-container>
+          <ng-template #updateTemplate>
+            <!-- original -->
+            <div class="flex-initial">
+              <button
+                (click)="updateBook(book)"
+                type="button"
+                class="rounded-sm bg-blue-400 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100"
+              >
+                Update
+              </button>
+            </div>
+          </ng-template>
+          <div class="flex-initial">
+            <button
+              (click)="deleteBook(book)"
+              type="button"
+              class="rounded-sm bg-red-400 px-5 py-2.5 text-sm font-semibold text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-100"
+            >
+              Remove
+            </button>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
