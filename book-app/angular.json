@@ -102,5 +102,7 @@
       }
     }
   },
-  "defaultProject": "book-app"
+  "cli": {
+    "analytics": false
+  }
 }

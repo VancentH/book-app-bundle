@@ -1,0 +1,10 @@
+<main>
+  <div class="w-full bg-gray-200 py-6 sm:px-6 lg:px-8">
+    <div class="relative mb-6 flex items-center justify-center overflow-x-auto">
+      <app-dashboard [books]="(books$ | async)!"></app-dashboard>
+    </div>
+    <div>
+      <app-form></app-form>
+    </div>
+  </div>
+</main>
