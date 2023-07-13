@@ -2,21 +2,52 @@ version: '3.5'
 
 services:
   springboot-container:
+    # 後端服務
     container_name: springboot-container
     build:
-      context: book-app-backend # 指定前端資料夾目錄(包含Dockerfile的根目錄)
+      context: book-app-backend # 指定前端資料夾目錄(包含 Dockerfile 的根目錄)
       dockerfile: Dockerfile
+      # alternative Dockerfile path（相對於 context 目錄下）
+      # 如果不想讓 docker 從預設目錄 context 下找 Dockerfile 可在這邊另外指定
     ports:
-      - 8080:8080
-    restart: always
+      - 8080:8080 # 本機 8080 port 轉發到容器中的 8080 port
+    restart: always # always restart the container if it stops
+    depends_on:
+      - mysql # 等待資料庫服務 mysql 啟動後、再行啟動
+    networks:
+      - backend
+      - frontend
   nginx-container:
+    # 前端服務
     container_name: nginx-container
     build:
-      context: book-app # 指定前端資料夾目錄(包含Dockerfile的根目錄)
+      context: book-app
       dockerfile: Dockerfile
     ports:
       - 80:80 # 在 default.conf 指定了 nginx 對外 port
-    command: ["nginx", "-g", "daemon off;"]
+    command: [ "nginx", "-g", "daemon off;" ]
     restart: always
     depends_on:
-      - springboot-container # 等待後端服務啟動後、再行啟動該服務
+      - springboot-container # 等待後端服務 springboot-container 啟動後、再行啟動自身服務
+    networks:
+      - frontend
+  mysql:
+    # 資料庫服務
+    image: mysql:8.0
+    container_name: mysql-db
+    environment:
+      # 設定環境變數
+      MYSQL_ROOT_PASSWORD: admin123 # mysql root 密碼
+      MYSQL_DATABASE: book # 資料庫名稱
+      MYSQL_USER: vi01 # 這邊我使用其他帳號，而不是 root(也可以使用)
+      MYSQL_PASSWORD: vi01@123 # 密碼
+    restart: always
+    ports:
+      - 3306:3306
+    networks:
+      - backend
+
+# bridge network 讓容器之間可以連線溝通
+networks:
+  frontend:
+  backend:
