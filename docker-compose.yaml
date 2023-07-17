@@ -28,6 +28,7 @@ services:
       - 8080:8080 # 本機 8080 port 轉發到容器中的 8080 port
     restart: always # always restart the container if it stops
     networks:
+      - frontend
       - backend
   nginx-container:
     # 前端服務
